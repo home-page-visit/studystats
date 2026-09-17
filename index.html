@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FocusFlow — Distraction-Free Study</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark">✦</span><span>FocusFlow</span></div>
+    <p class="tagline">Study deeply. Improve daily.</p>
+    <nav>
+      <button class="nav-item active" data-view="dashboard">⌂ <span>Dashboard</span></button>
+      <button class="nav-item" data-view="tasks">✓ <span>Tasks</span></button>
+      <button class="nav-item" data-view="notes">▤ <span>Quick Notes</span></button>
+      <button class="nav-item" data-view="stats">◔ <span>Statistics</span></button>
+    </nav>
+    <div class="sidebar-bottom">
+      <button id="focusModeBtn" class="secondary-btn">⛶ Focus mode</button>
+      <button id="themeBtn" class="secondary-btn">☾ Toggle theme</button>
+      <p class="shortcut">Space: start/pause timer<br>R: reset timer<br>F: focus mode</p>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <div><p class="eyebrow">YOUR PERSONAL STUDY SPACE</p><h1 id="pageTitle">Good study session, Sivaram.</h1></div>
+      <div class="date-pill" id="todayLabel"></div>
+    </header>
+
+    <section id="dashboard" class="view active-view">
+      <div class="hero-grid">
+        <section class="card timer-card">
+          <div class="card-heading"><div><p class="eyebrow">CURRENT SESSION</p><h2 id="sessionLabel">Focus session</h2></div><span class="status-dot">● Live-ready</span></div>
+          <div class="timer-ring"><div><div id="timerDisplay">25:00</div><p id="timerSubtext">Ready when you are</p></div></div>
+          <div class="timer-modes"><button class="mode-btn active" data-minutes="25" data-label="Focus session">Focus</button><button class="mode-btn" data-minutes="5" data-label="Short break">Short break</button><button class="mode-btn" data-minutes="15" data-label="Long break">Long break</button></div>
+          <div class="timer-controls"><button id="startBtn" class="primary-btn">▶ Start</button><button id="resetBtn" class="secondary-btn">↺ Reset</button></div>
+          <p class="microcopy">Stay with one task until the timer ends.</p>
+        </section>
+
+        <section class="card goal-card">
+          <div class="card-heading"><div><p class="eyebrow">TODAY'S GOAL</p><h2>Build momentum</h2></div><span class="goal-icon">◎</span></div>
+          <div class="goal-number"><span id="goalMinutes">120</span><small>min</small></div>
+          <p class="muted">Daily focused study target</p>
+          <input id="goalSlider" type="range" min="30" max="480" step="30" value="120" />
+          <div class="range-labels"><span>30 min</span><span>480 min</span></div>
+          <div class="progress-track"><div id="goalProgress" class="progress-fill" style="width:0%"></div></div>
+          <p id="goalProgressText" class="muted">0 / 120 minutes completed</p>
+          <button id="editGoalBtn" class="secondary-btn full-width">Set goal to slider value</button>
+        </section>
+      </div>
+
+      <div class="section-heading"><div><p class="eyebrow">YOUR PLAN</p><h2>Today's study tasks</h2></div><button class="text-btn" data-view-target="tasks">View all →</button></div>
+      <section class="card task-preview"><div id="dashboardTasks" class="task-list"></div><button id="quickAddBtn" class="add-task-row">＋ Add a new task</button></section>
+
+      <div class="section-heading"><div><p class="eyebrow">STUDY INSIGHTS</p><h2>Your progress</h2></div><button class="text-btn" data-view-target="stats">Details →</button></div>
+      <div class="stats-grid"><div class="card stat-card"><span>Focused minutes</span><strong id="statMinutes">0</strong><small>Today</small></div><div class="card stat-card"><span>Sessions</span><strong id="statSessions">0</strong><small>Completed</small></div><div class="card stat-card"><span>Tasks done</span><strong id="statTasks">0%</strong><small>Daily completion</small></div></div>
+    </section>
+
+    <section id="tasks" class="view"><div class="section-heading"><div><p class="eyebrow">PLAN WITH INTENTION</p><h2>Study tasks</h2></div></div><section class="card"><form id="taskForm" class="task-form"><input id="taskInput" required placeholder="e.g. Revise electromagnetic induction" /><select id="subjectInput"><option>Physics</option><option>Chemistry</option><option>Maths</option><option>Other</option></select><button class="primary-btn" type="submit">Add task</button></form><div id="allTasks" class="task-list"></div></section></section>
+
+    <section id="notes" class="view"><div class="section-heading"><div><p class="eyebrow">CAPTURE YOUR THINKING</p><h2>Quick notes</h2></div></div><section class="card notes-card"><textarea id="notesInput" placeholder="Write formulas, questions, ideas, or reminders..."></textarea><div class="notes-footer"><span id="saveStatus">Saved locally in your browser</span><button id="clearNotesBtn" class="secondary-btn">Clear notes</button></div></section></section>
+
+    <section id="stats" class="view">
+      <div class="section-heading"><div><p class="eyebrow">MEASURE WHAT MATTERS</p><h2>Advanced analytics</h2></div><button id="resetStatsBtn" class="text-btn">Reset statistics ↺</button></div>
+      <div class="stats-grid analytics-top"><div class="card stat-card"><span>Focused minutes</span><strong id="detailMinutes">0</strong><small>Today</small></div><div class="card stat-card"><span>Completed sessions</span><strong id="detailSessions">0</strong><small>Today</small></div><div class="card stat-card"><span>Tasks completed</span><strong id="detailTasks">0</strong><small>All tasks</small></div></div>
+      <div class="analytics-grid"><section class="card"><div class="card-heading"><div><p class="eyebrow">LAST 7 DAYS</p><h3>Study activity</h3></div><span class="muted">Minutes</span></div><div id="weeklyChart" class="bar-chart" aria-label="Study activity for the last seven days"></div></section>
+      <section class="card"><div class="card-heading"><div><p class="eyebrow">SUBJECT MIX</p><h3>Where time goes</h3></div></div><div id="subjectChart" class="subject-chart"></div></section></div>
+      <section class="card insight-card"><div><p class="eyebrow">CONSISTENCY</p><h3 id="streakValue">0 day streak</h3><p id="streakText" class="muted">Complete a focus session to start your streak.</p></div><div class="streak-badge">✦</div></section>
+      <section class="card reflection-card"><h3>Reflection prompt</h3><p id="reflectionText">What is one concept you understand better today?</p><button id="newPromptBtn" class="secondary-btn">New prompt</button></section></section>
+  </main>
+</div>
+<div id="focusOverlay" class="focus-overlay hidden"><button id="exitFocusBtn" class="exit-focus">Exit focus mode ✕</button><p class="eyebrow">DEEP WORK</p><h2 id="focusOverlayLabel">Focus session</h2><div id="focusOverlayTimer">25:00</div><p>One task. One session. No distractions.</p><div><button id="overlayStartBtn" class="primary-btn">▶ Start</button><button id="overlayResetBtn" class="secondary-btn">↺ Reset</button></div></div>
+<script src="script.js"></script>
+</body>
+</html>
